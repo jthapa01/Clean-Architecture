@@ -330,6 +330,3 @@ ASALocalRun/
 .mfractor/
 
 logs/
-
-# Docker container files
-*.containers
