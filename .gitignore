@@ -333,3 +333,9 @@ logs/
 
 # Docker container files
 *.containers
+
+# Add DotSettings.user files 
+*.user
+
+# Add any .bak files
+*.bak
