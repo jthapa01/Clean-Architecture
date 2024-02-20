@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bookify.Application.Abstraction.Behaviors;
 
-public class LoggingBehavior<TRequest, TResponse>(ILogger<TRequest> logger)
+public class LoggingBehavior<TRequest, TResponse>(ILogger<TRequest> logger) 
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IBaseCommand
 {
@@ -13,14 +13,14 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<TRequest> logger)
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        var name = typeof(TRequest).Name;
+        var name = request.GetType().Name;
 
         try
         {
             logger.LogInformation("Executing command {Command}", name);
 
             var result = await next();
-            
+
             logger.LogInformation("Command {Command} processed successfully", name);
 
             return result;

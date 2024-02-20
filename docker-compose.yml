@@ -21,7 +21,7 @@ services:
     volumes:
       - ./.containers/database:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5435:5432"
         
   bookify-idp:
     image: jboss/keycloak:latest
@@ -29,9 +29,9 @@ services:
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
-      - KEYCLOAK_IMPORT=/tmp/realm-export.json
+      - KEYCLOAK_IMPORT=/tmp/bookify-realm-export.json
     volumes:
-        - ./.containers/identity:/OPT/jboss/keycloak/standalone/data
-        - ./.files/bookify-realm-export.json:/tmp/realm-export.json
+      - ./.containers/identity:/opt/jboss/keycloak/standalone/data
+      - ./.files/bookify-realm-export.json:/tmp/bookify-realm-export.json
     ports:
-        - "18080:8080"
+      - "18080:8080"

@@ -11,4 +11,8 @@ public static class UserErrors
     public static Error InvalidCredentials => new(
         "Invalid credentials", 
         "The provided credentials were invalid.");
+    
+    public static Error EmailAlreadyExists => new(
+        "Email already exists", 
+        "User with the given email already exists.");
 }
