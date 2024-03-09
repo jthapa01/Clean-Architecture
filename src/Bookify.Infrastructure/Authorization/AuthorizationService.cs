@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookify.Infrastructure.Authorization;
 
-public sealed class AuthorizationService(DbContext dbContext, ICacheService cacheService)
+public sealed class AuthorizationService(ApplicationDbContext dbContext, ICacheService cacheService)
 {
     public async Task<UserRolesResponse> GetRolesForUserAsync(string identityId)
     {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookify.Infrastructure.Authorization;
 
-public class PermissionAuthorizationHandler(IServiceProvider serviceProvider) 
+internal sealed class PermissionAuthorizationHandler(IServiceProvider serviceProvider) 
     : AuthorizationHandler<PermissionRequirement>
 {
     protected override async Task HandleRequirementAsync(
@@ -18,11 +18,11 @@ public class PermissionAuthorizationHandler(IServiceProvider serviceProvider)
 
         using var scope = serviceProvider.CreateScope();
 
-        AuthorizationService authorizationService = scope.ServiceProvider.GetRequiredService<AuthorizationService>();
+        var authorizationService = scope.ServiceProvider.GetRequiredService<AuthorizationService>();
 
-        string identityId = context.User.GetIdentityId();
+        var identityId = context.User.GetIdentityId();
 
-        HashSet<string> permissions = await authorizationService.GetPermissionsForUserAsync(identityId);
+        var permissions = await authorizationService.GetPermissionsForUserAsync(identityId);
 
         if (permissions.Contains(requirement.Permission))
         {
