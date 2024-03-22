@@ -21,3 +21,9 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+LICENSE
+README.md
+node_modules
+log
+tmp
+.idea
