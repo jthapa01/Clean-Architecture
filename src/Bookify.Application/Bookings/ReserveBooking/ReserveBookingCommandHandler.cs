@@ -1,5 +1,5 @@
-using Bookify.Application.Abstraction.Clock;
-using Bookify.Application.Abstraction.Messaging;
+﻿using Bookify.Application.Abstractions.Clock;
+using Bookify.Application.Abstractions.Messaging;
 using Bookify.Application.Exceptions;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Apartments;
@@ -12,29 +12,29 @@ internal sealed class ReserveBookingCommandHandler(
     IUserRepository userRepository,
     IApartmentRepository apartmentRepository,
     IBookingRepository bookingRepository,
-    PricingService pricingService,
     IUnitOfWork unitOfWork,
+    PricingService pricingService,
     IDateTimeProvider dateTimeProvider)
     : ICommandHandler<ReserveBookingCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(ReserveBookingCommand request, CancellationToken cancellationToken)
     {
-        var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
+        User? user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
 
         if (user is null)
         {
             return Result.Failure<Guid>(UserErrors.NotFound);
         }
-        
-        var apartment = await apartmentRepository.GetByIdAsync(request.ApartmentId, cancellationToken);
-        
-        if(apartment is null)
+
+        Apartment? apartment = await apartmentRepository.GetByIdAsync(request.ApartmentId, cancellationToken);
+
+        if (apartment is null)
         {
             return Result.Failure<Guid>(ApartmentErrors.NotFound);
         }
-        
+
         var duration = DateRange.Create(request.StartDate, request.EndDate);
-        
+
         if (await bookingRepository.IsOverlappingAsync(apartment, duration, cancellationToken))
         {
             return Result.Failure<Guid>(BookingErrors.Overlap);
@@ -46,11 +46,11 @@ internal sealed class ReserveBookingCommandHandler(
                 apartment,
                 user.Id,
                 duration,
-                utcNow: dateTimeProvider.UtcNow,
+                dateTimeProvider.UtcNow,
                 pricingService);
 
             bookingRepository.Add(booking);
-            
+
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return booking.Id;

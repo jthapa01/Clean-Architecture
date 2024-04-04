@@ -1,5 +1,6 @@
 using Asp.Versioning;
-using Bookify.Application.Reviews.addReview;
+using Bookify.Application.Reviews.AddReview;
+using Bookify.Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,9 +15,12 @@ public class ReviewsController(ISender sender) : ControllerBase
     public async Task<IActionResult> AddReview([FromBody] AddReviewRequest request, CancellationToken cancellationToken)
     {
         var command = new AddReviewCommand(request.BookingId, request.Rating, request.Comment);
-        var result = await sender.Send(command, cancellationToken);
+        Result result = await sender.Send(command, cancellationToken);
         if (result.IsFailure)
+        {
             return BadRequest(result.Error);
+        }
+
         return Ok();
     }
 }

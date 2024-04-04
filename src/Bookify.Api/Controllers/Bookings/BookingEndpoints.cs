@@ -1,5 +1,6 @@
 using Bookify.Application.Bookings.GetBooking;
 using Bookify.Application.Bookings.ReserveBooking;
+using Bookify.Domain.Abstractions;
 using MediatR;
 
 namespace Bookify.Api.Controllers.Bookings;
@@ -21,7 +22,7 @@ public static class BookingEndpoints
     {
         var query = new GetBookingQuery(id);
         
-        var result = await sender.Send(query, cancellationToken);
+        Result<BookingResponse>? result = await sender.Send(query, cancellationToken);
 
         return result.IsSuccess ? Results.Ok(result.Value) : Results.NotFound();
     }
@@ -35,7 +36,7 @@ public static class BookingEndpoints
             request.StartDate,
             request.EndDate);
 
-        var result = await sender.Send(command, cancellationToken);
+        Result<Guid>? result = await sender.Send(command, cancellationToken);
 
         return result.IsFailure
             ? Results.BadRequest(result.Error)

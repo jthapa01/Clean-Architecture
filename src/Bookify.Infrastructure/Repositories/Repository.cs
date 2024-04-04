@@ -1,4 +1,4 @@
-using Bookify.Domain.Abstractions;
+﻿using Bookify.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookify.Infrastructure.Repositories;
@@ -9,16 +9,16 @@ internal abstract class Repository<T>(ApplicationDbContext dbContext)
     protected readonly ApplicationDbContext DbContext = dbContext;
 
     public async Task<T?> GetByIdAsync(
-        Guid id, 
+        Guid id,
         CancellationToken cancellationToken = default)
     {
         return await DbContext
             .Set<T>()
-            .FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
-    
+
     public virtual void Add(T entity)
     {
-        DbContext.Set<T>().Add(entity);
+        DbContext.Add(entity);
     }
 }

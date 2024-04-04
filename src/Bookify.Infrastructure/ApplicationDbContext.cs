@@ -1,4 +1,4 @@
-using Bookify.Application.Abstraction.Clock;
+﻿using Bookify.Application.Abstractions.Clock;
 using Bookify.Application.Exceptions;
 using Bookify.Domain.Abstractions;
 using Bookify.Infrastructure.Outbox;
@@ -29,8 +29,8 @@ public sealed class ApplicationDbContext(
         try
         {
             AddDomainEventsAsOutboxMessages();
-            
-            var result = await base.SaveChangesAsync(cancellationToken);
+
+            int result = await base.SaveChangesAsync(cancellationToken);
 
             return result;
         }
@@ -47,19 +47,19 @@ public sealed class ApplicationDbContext(
             .Select(entry => entry.Entity)
             .SelectMany(entity =>
             {
-                var domainEvents = entity.GetDomainEvents();
+                IReadOnlyList<IDomainEvent> domainEvents = entity.GetDomainEvents();
 
                 entity.ClearDomainEvents();
 
                 return domainEvents;
             })
             .Select(domainEvent => new OutboxMessage(
-                    Guid.NewGuid(),
-                    dateTimeProvider.UtcNow,
-                    domainEvent.GetType().Name,
-                    JsonConvert.SerializeObject(domainEvent, JsonSerializerSettings)))
+                Guid.NewGuid(),
+                dateTimeProvider.UtcNow,
+                domainEvent.GetType().Name,
+                JsonConvert.SerializeObject(domainEvent, JsonSerializerSettings)))
             .ToList();
-        
+
         AddRange(outboxMessages);
     }
 }

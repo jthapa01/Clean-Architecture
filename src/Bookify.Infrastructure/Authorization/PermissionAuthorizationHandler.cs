@@ -1,10 +1,10 @@
-using Bookify.Infrastructure.Authentication;
+﻿using Bookify.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bookify.Infrastructure.Authorization;
 
-internal sealed class PermissionAuthorizationHandler(IServiceProvider serviceProvider) 
+internal sealed class PermissionAuthorizationHandler(IServiceProvider serviceProvider)
     : AuthorizationHandler<PermissionRequirement>
 {
     protected override async Task HandleRequirementAsync(
@@ -16,13 +16,13 @@ internal sealed class PermissionAuthorizationHandler(IServiceProvider servicePro
             return;
         }
 
-        using var scope = serviceProvider.CreateScope();
+        using IServiceScope scope = serviceProvider.CreateScope();
 
-        var authorizationService = scope.ServiceProvider.GetRequiredService<AuthorizationService>();
+        AuthorizationService authorizationService = scope.ServiceProvider.GetRequiredService<AuthorizationService>();
 
-        var identityId = context.User.GetIdentityId();
+        string identityId = context.User.GetIdentityId();
 
-        var permissions = await authorizationService.GetPermissionsForUserAsync(identityId);
+        HashSet<string> permissions = await authorizationService.GetPermissionsForUserAsync(identityId);
 
         if (permissions.Contains(requirement.Permission))
         {

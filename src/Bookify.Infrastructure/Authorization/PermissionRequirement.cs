@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace Bookify.Infrastructure.Authorization;
 
-public class PermissionRequirement(string permission) : IAuthorizationRequirement
+internal sealed class PermissionRequirement(string permission) : IAuthorizationRequirement
 {
     public string Permission { get; } = permission;
 }

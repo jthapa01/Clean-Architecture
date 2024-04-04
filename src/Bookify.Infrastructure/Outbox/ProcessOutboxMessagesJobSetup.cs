@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Quartz;
 
 namespace Bookify.Infrastructure.Outbox;
@@ -13,11 +13,11 @@ internal sealed class ProcessOutboxMessagesJobSetup(IOptions<OutboxOptions> outb
         const string jobName = nameof(ProcessOutboxMessagesJob);
 
         options
-            .AddJob<ProcessOutboxMessagesJob>(jobBuilder => jobBuilder.WithIdentity(jobName))
-            .AddTrigger(triggerBuilder =>
-                triggerBuilder
+            .AddJob<ProcessOutboxMessagesJob>(configure => configure.WithIdentity(jobName))
+            .AddTrigger(configure =>
+                configure
                     .ForJob(jobName)
-                    .WithSimpleSchedule(scheduleBuilder =>
-                        scheduleBuilder.WithIntervalInSeconds(_outboxOptions.IntervalInSeconds).RepeatForever()));
+                    .WithSimpleSchedule(schedule =>
+                        schedule.WithIntervalInSeconds(_outboxOptions.IntervalInSeconds).RepeatForever()));
     }
 }

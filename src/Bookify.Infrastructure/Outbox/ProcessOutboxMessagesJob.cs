@@ -1,6 +1,6 @@
-using System.Data;
-using Bookify.Application.Abstraction.Clock;
-using Bookify.Application.Abstraction.Data;
+﻿using System.Data;
+using Bookify.Application.Abstractions.Clock;
+using Bookify.Application.Abstractions.Data;
 using Bookify.Domain.Abstractions;
 using Dapper;
 using MediatR;
@@ -20,88 +20,86 @@ internal sealed class ProcessOutboxMessagesJob(
     ILogger<ProcessOutboxMessagesJob> logger)
     : IJob
 {
-    private readonly OutboxOptions _outboxOptions = outboxOptions.Value;
     private static readonly JsonSerializerSettings JsonSerializerSettings = new()
     {
         TypeNameHandling = TypeNameHandling.All
     };
-    
+
+    private readonly OutboxOptions _outboxOptions = outboxOptions.Value;
+
     public async Task Execute(IJobExecutionContext context)
     {
         logger.LogInformation("Beginning to process outbox messages");
-        
-        using var connection = sqlConnectionFactory.CreateConnection();
-        using var transaction = connection.BeginTransaction();
-        
-        var outboxMessages = await GetOutboxMessagesAsync(connection, transaction);
 
-        foreach (var outboxMessage in outboxMessages)
+        using IDbConnection connection = sqlConnectionFactory.CreateConnection();
+        using IDbTransaction transaction = connection.BeginTransaction();
+
+        IReadOnlyList<OutboxMessageResponse> outboxMessages = await GetOutboxMessagesAsync(connection, transaction);
+
+        foreach (OutboxMessageResponse outboxMessage in outboxMessages)
         {
-            var exception = default(Exception);
+            Exception? exception = null;
 
             try
             {
-                var domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(
+                IDomainEvent domainEvent = JsonConvert.DeserializeObject<IDomainEvent>(
                     outboxMessage.Content,
                     JsonSerializerSettings)!;
-                
+
                 await publisher.Publish(domainEvent, context.CancellationToken);
             }
-            catch(Exception caughtException)
+            catch (Exception caughtException)
             {
                 logger.LogError(
-                    caughtException, 
-                    "Exception while processing outbox message {MessageId}", 
+                    caughtException,
+                    "Exception while processing outbox message {MessageId}",
                     outboxMessage.Id);
-                
+
                 exception = caughtException;
             }
-            
+
             await UpdateOutboxMessageAsync(connection, transaction, outboxMessage, exception);
         }
-        
+
         transaction.Commit();
-        
-        logger.LogInformation("Finished processing outbox messages");
+
+        logger.LogInformation("Completed processing outbox messages");
     }
-    
+
     private async Task<IReadOnlyList<OutboxMessageResponse>> GetOutboxMessagesAsync(
-        IDbConnection connection, 
+        IDbConnection connection,
         IDbTransaction transaction)
     {
-        const string sql = """
-                           SELECT
-                               id AS Id,
-                               content AS Content
-                           FROM outbox_messages
-                           WHERE processed_on_utc IS NULL
-                           ORDER BY occurred_on_utc
-                           LIMIT @BatchSize
-                           FOR UPDATE
-                           """;
+        string sql = $"""
+                      SELECT id, content
+                      FROM outbox_messages
+                      WHERE processed_on_utc IS NULL
+                      ORDER BY occurred_on_utc
+                      LIMIT {_outboxOptions.BatchSize}
+                      FOR UPDATE
+                      """;
 
-        return (await connection.QueryAsync<OutboxMessageResponse>(
+        IEnumerable<OutboxMessageResponse> outboxMessages = await connection.QueryAsync<OutboxMessageResponse>(
             sql,
-            new
-            {
-                _outboxOptions.BatchSize
-            },
-            transaction)).ToList();
+            transaction: transaction);
+
+        return outboxMessages.ToList();
     }
-    
+
     private async Task UpdateOutboxMessageAsync(
         IDbConnection connection,
         IDbTransaction transaction,
         OutboxMessageResponse outboxMessage,
         Exception? exception)
     {
-        const string sql = """
-            UPDATE outbox_messages
-            SET processed_on_utc = @ProcessedOnUtc,
-                error = @Error
-            WHERE id = @Id
-            """;
-        
+        const string sql = $"""
+                           
+                                       UPDATE outbox_messages
+                                       SET processed_on_utc = @ProcessedOnUtc,
+                                           error = @Error
+                                       WHERE id = @Id
+                           """;
+
         await connection.ExecuteAsync(
             sql,
             new
@@ -110,8 +108,8 @@ internal sealed class ProcessOutboxMessagesJob(
                 ProcessedOnUtc = dateTimeProvider.UtcNow,
                 Error = exception?.ToString()
             },
-            transaction);
+            transaction: transaction);
     }
-    
-    private sealed record OutboxMessageResponse(Guid Id, string Content);
+
+    internal sealed record OutboxMessageResponse(Guid Id, string Content);
 }

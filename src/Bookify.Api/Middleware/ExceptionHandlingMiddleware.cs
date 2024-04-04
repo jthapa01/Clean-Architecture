@@ -17,7 +17,7 @@ public  class ExceptionHandlingMiddleware(
         {
             logger.LogError(ex, "Exception occured: {Message}", ex.Message);
             
-            var exceptionDetails = GetExceptionDetails(ex);
+            ExceptionDetails exceptionDetails = GetExceptionDetails(ex);
 
             var problemDetails = new ProblemDetails
             {
@@ -58,7 +58,7 @@ public  class ExceptionHandlingMiddleware(
         };
     }
 
-    private record ExceptionDetails(
+    internal sealed record ExceptionDetails(
      int Status,
      string Type,
      string Title,

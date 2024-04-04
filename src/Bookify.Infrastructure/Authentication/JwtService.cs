@@ -1,5 +1,5 @@
-using System.Net.Http.Json;
-using Bookify.Application.Abstraction.Authentication;
+﻿using System.Net.Http.Json;
+using Bookify.Application.Abstractions.Authentication;
 using Bookify.Domain.Abstractions;
 using Bookify.Infrastructure.Authentication.Models;
 using Microsoft.Extensions.Options;
@@ -34,14 +34,14 @@ internal sealed class JwtService(HttpClient httpClient, IOptions<KeycloakOptions
 
             using var authorizationRequestContent = new FormUrlEncodedContent(authRequestParameters);
 
-            var response = await httpClient.PostAsync(
+            HttpResponseMessage response = await httpClient.PostAsync(
                 "",
                 authorizationRequestContent,
                 cancellationToken);
 
             response.EnsureSuccessStatusCode();
 
-            var authorizationToken = await response
+            AuthorizationToken? authorizationToken = await response
                 .Content
                 .ReadFromJsonAsync<AuthorizationToken>(cancellationToken);
 

@@ -8,9 +8,9 @@ public static class ApplicationBuilderExtensions
 {
     public static void ApplyMigrations(this IApplicationBuilder app)
     {
-        using var serviceScope = app.ApplicationServices.CreateScope();
+        using IServiceScope serviceScope = app.ApplicationServices.CreateScope();
         
-        using var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        using ApplicationDbContext context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         
         context.Database.Migrate();
     }

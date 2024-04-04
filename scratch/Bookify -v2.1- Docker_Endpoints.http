@@ -1,0 +1,166 @@
+# Bookify
+
+###
+# group: Apartments
+# @name Search Apartments
+GET {{api_url}}/api/v1/apartments?startDate=01-26-2024&endDate=01-31-2024
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ3X2gxZ3hRdHRXcFNCcnIzYTBMcG4xVTZMUUloWXBGYXlpUTVGazB4U2tJIn0.eyJleHAiOjE3MTIyMDAwNzksImlhdCI6MTcxMjE5NjQ3OSwianRpIjoiNDY3NjZmMTctZjA5ZS00NDY4LWE4MzYtMzNkNzMwYjMzYWIyIiwiaXNzIjoiaHR0cDovL2Jvb2tpZnktaWRwOjgwODAvcmVhbG1zL2Jvb2tpZnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiY2RkZmQ0NzEtY2Y2OC00ZGMyLTk5Y2EtZTQ3NjAwZjg1Njk3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYm9va2lmeS1hdXRoLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJlNGYwMTQ0YS01ZGUzLTQwN2UtYTIwYS0yNjcyNmEwMGQ3ZWMiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtYm9va2lmeSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJlNGYwMTQ0YS01ZGUzLTQwN2UtYTIwYS0yNjcyNmEwMGQ3ZWMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkpheTEgVGhhMSIsInByZWZlcnJlZF91c2VybmFtZSI6ImpheXRoYTFAdGVzdC5jb20iLCJnaXZlbl9uYW1lIjoiSmF5MSIsImZhbWlseV9uYW1lIjoiVGhhMSIsImVtYWlsIjoiamF5dGhhMUB0ZXN0LmNvbSJ9.rGujoQHplj5mqcFXTKQubpBfeeL3Lt6aF6ar_3jaXOzY4o9AzE6yrzxUK0nDMElYJjChi2pBjwZibP6QlVM49o3HMj0EppYf4MEnTfeTIbbX0YaqnXxj_GSG5LAh7QQ_fwVEj2Ilq4DhCnaxOiOssyWQBXrN4YKnM4gDoXSakCwCqbscibDTxSlztvx15hl6C0V_j3mq3nQpmf7ZxmrhtHM7_FecCVZkdPqLU9NDqq6D9FE3iOwODih2WtctLuwPrj_TUM57nKJEAkeqyPjHUyKxBkmFoNBOzmHXfnHr1NIh6pv0p-f2A4TioYO_U5nSF0cYPLfpYW3fMEsUDEAtGQ
+
+<> 2024-04-03T220829.200.json
+<> 2024-03-04T225457.200.json
+
+###
+# group: Bookings
+# @name Reserve Booking
+POST {{api_url}}/api/v1/bookings
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ3X2gxZ3hRdHRXcFNCcnIzYTBMcG4xVTZMUUloWXBGYXlpUTVGazB4U2tJIn0.eyJleHAiOjE3MTIyMDAwNzksImlhdCI6MTcxMjE5NjQ3OSwianRpIjoiNDY3NjZmMTctZjA5ZS00NDY4LWE4MzYtMzNkNzMwYjMzYWIyIiwiaXNzIjoiaHR0cDovL2Jvb2tpZnktaWRwOjgwODAvcmVhbG1zL2Jvb2tpZnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiY2RkZmQ0NzEtY2Y2OC00ZGMyLTk5Y2EtZTQ3NjAwZjg1Njk3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYm9va2lmeS1hdXRoLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJlNGYwMTQ0YS01ZGUzLTQwN2UtYTIwYS0yNjcyNmEwMGQ3ZWMiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtYm9va2lmeSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJlNGYwMTQ0YS01ZGUzLTQwN2UtYTIwYS0yNjcyNmEwMGQ3ZWMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkpheTEgVGhhMSIsInByZWZlcnJlZF91c2VybmFtZSI6ImpheXRoYTFAdGVzdC5jb20iLCJnaXZlbl9uYW1lIjoiSmF5MSIsImZhbWlseV9uYW1lIjoiVGhhMSIsImVtYWlsIjoiamF5dGhhMUB0ZXN0LmNvbSJ9.rGujoQHplj5mqcFXTKQubpBfeeL3Lt6aF6ar_3jaXOzY4o9AzE6yrzxUK0nDMElYJjChi2pBjwZibP6QlVM49o3HMj0EppYf4MEnTfeTIbbX0YaqnXxj_GSG5LAh7QQ_fwVEj2Ilq4DhCnaxOiOssyWQBXrN4YKnM4gDoXSakCwCqbscibDTxSlztvx15hl6C0V_j3mq3nQpmf7ZxmrhtHM7_FecCVZkdPqLU9NDqq6D9FE3iOwODih2WtctLuwPrj_TUM57nKJEAkeqyPjHUyKxBkmFoNBOzmHXfnHr1NIh6pv0p-f2A4TioYO_U5nSF0cYPLfpYW3fMEsUDEAtGQ
+Content-Type: application/json
+
+{
+    "apartmentId": "a48e75fd-6904-4027-8461-e0772271bc2f",
+    "userId": "95ca308f-bfdf-4c31-ae89-5873303c46f6",
+    "startDate": "2024-08-20",
+    "endDate": "2024-08-25"
+}
+
+<> 2024-04-03T221012.201.json
+<> 2024-03-04T231931.500.json
+<> 2024-03-04T231838.500.json
+<> 2024-03-04T231711.400.json
+<> 2024-03-04T231648.400.json
+<> 2024-03-04T231142.400.json
+
+###
+# group: Bookings
+# @name Get Booking
+GET {{api_url}}/api/v1/bookings/bfed1b74-eddb-4ee7-b985-6ccc0663675e
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ3X2gxZ3hRdHRXcFNCcnIzYTBMcG4xVTZMUUloWXBGYXlpUTVGazB4U2tJIn0.eyJleHAiOjE3MTIyMDAwNzksImlhdCI6MTcxMjE5NjQ3OSwianRpIjoiNDY3NjZmMTctZjA5ZS00NDY4LWE4MzYtMzNkNzMwYjMzYWIyIiwiaXNzIjoiaHR0cDovL2Jvb2tpZnktaWRwOjgwODAvcmVhbG1zL2Jvb2tpZnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiY2RkZmQ0NzEtY2Y2OC00ZGMyLTk5Y2EtZTQ3NjAwZjg1Njk3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYm9va2lmeS1hdXRoLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJlNGYwMTQ0YS01ZGUzLTQwN2UtYTIwYS0yNjcyNmEwMGQ3ZWMiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtYm9va2lmeSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJlNGYwMTQ0YS01ZGUzLTQwN2UtYTIwYS0yNjcyNmEwMGQ3ZWMiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkpheTEgVGhhMSIsInByZWZlcnJlZF91c2VybmFtZSI6ImpheXRoYTFAdGVzdC5jb20iLCJnaXZlbl9uYW1lIjoiSmF5MSIsImZhbWlseV9uYW1lIjoiVGhhMSIsImVtYWlsIjoiamF5dGhhMUB0ZXN0LmNvbSJ9.rGujoQHplj5mqcFXTKQubpBfeeL3Lt6aF6ar_3jaXOzY4o9AzE6yrzxUK0nDMElYJjChi2pBjwZibP6QlVM49o3HMj0EppYf4MEnTfeTIbbX0YaqnXxj_GSG5LAh7QQ_fwVEj2Ilq4DhCnaxOiOssyWQBXrN4YKnM4gDoXSakCwCqbscibDTxSlztvx15hl6C0V_j3mq3nQpmf7ZxmrhtHM7_FecCVZkdPqLU9NDqq6D9FE3iOwODih2WtctLuwPrj_TUM57nKJEAkeqyPjHUyKxBkmFoNBOzmHXfnHr1NIh6pv0p-f2A4TioYO_U5nSF0cYPLfpYW3fMEsUDEAtGQ
+
+<> 2024-04-03T221119.200.json
+
+###
+# group: Users
+# @name Register User
+POST {{api_url}}/api/v1/users/register
+Content-Type: application/json
+
+{
+    "email": "jaytha1@test.com",
+    "firstName": "Jay1",
+    "lastName": "Tha1",
+    "password": "12345"
+}
+
+<> 2024-04-03T220308.200.json
+<> 2024-03-17T204600.400.json
+<> 2024-03-17T204215.200.json
+<> 2024-03-17T203931.400.json
+<> 2024-03-17T203921.400.json
+<> 2024-03-17T203837.400.json
+<> 2024-03-02T114613.200.json
+<> 2024-03-02T105950.200.json
+<> 2024-03-01T232015.200.json
+<> 2024-03-01T231847.400.json
+
+
+###
+# group: Users
+# @name Log in User
+POST {{api_url}}/api/v1/users/login
+Content-Type: application/json
+
+{
+  "email": "jaytha1@test.com",
+  "password": "12345"
+}
+
+<> 2024-04-03T220908.200.json
+<> 2024-04-03T220759.200.json
+<> 2024-04-03T220541.200.json
+<> 2024-03-17T203833.401.json
+<> 2024-03-04T230959.200.json
+<> 2024-03-04T225438.200.json
+<> 2024-03-02T152657.200.json
+<> 2024-03-02T114638.200.json
+<> 2024-03-02T114322.200.json
+<> 2024-03-02T114201.200.json
+<> 2024-03-02T111618.200.json
+<> 2024-03-02T110001.200.json
+<> 2024-03-02T105942.401.json
+<> 2024-03-02T105913.401.json
+<> 2024-03-01T233617.200.json
+<> 2024-03-01T233430.200.json
+<> 2024-03-01T232616.200.json
+<> 2024-03-01T232106.200.json
+<> 2024-03-01T224354.200.json
+<> 2024-03-01T223720.200.json
+
+###
+# group: Users
+# @name Get Logged In User
+GET {{api_url}}/api/v1/users/me
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ3X2gxZ3hRdHRXcFNCcnIzYTBMcG4xVTZMUUloWXBGYXlpUTVGazB4U2tJIn0.eyJleHAiOjE3MTIxOTk5NDEsImlhdCI6MTcxMjE5NjM0MSwianRpIjoiMjRmN2NmZWQtNzczYi00YzI4LTkwYzQtNTI1MDBhNDhkNTA0IiwiaXNzIjoiaHR0cDovL2Jvb2tpZnktaWRwOjgwODAvcmVhbG1zL2Jvb2tpZnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiY2RkZmQ0NzEtY2Y2OC00ZGMyLTk5Y2EtZTQ3NjAwZjg1Njk3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYm9va2lmeS1hdXRoLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJhZTUwYzVjZi1lYmVhLTQ2ODYtYjljOS1jODAzYTc4ZTExNzAiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtYm9va2lmeSJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJhZTUwYzVjZi1lYmVhLTQ2ODYtYjljOS1jODAzYTc4ZTExNzAiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkpheTEgVGhhMSIsInByZWZlcnJlZF91c2VybmFtZSI6ImpheXRoYTFAdGVzdC5jb20iLCJnaXZlbl9uYW1lIjoiSmF5MSIsImZhbWlseV9uYW1lIjoiVGhhMSIsImVtYWlsIjoiamF5dGhhMUB0ZXN0LmNvbSJ9.JF57SFXgmVFZlNcYaTW0MuBwEdlfHe8wfT8CcMzR-042kBIHI_LwoVSz5iXoGePEd250PzXevxOBwgZvRImfJqj_3bjBqn5HV-IzL5TUNdBe4XtqFwrTAkp3ns3udTq7abkR1o8Efg77tkbW5hVwmbYWL4R3AXPIjZTQWqniLkMQNIXaJINa_spxG3G56G-1baOeWvqiml_kzXYKwgZDgw5YOGbe0snpllfJpMrAdEeZGdQZOPalZhCI2LEfIsX7VUfuExS3dyj4p4fgBWvYxe7zvL85Muz_vjRz71DazvAqzkP2RsTeFgYQ5c11kRZRJjfzvkIMSF6V8dCVtd0_cg
+
+<> 2024-04-03T220919.200.json
+<> 2024-04-03T220711.200.json
+<> 2024-03-04T231025.200.json
+<> 2024-03-02T152722.200.json
+<> 2024-03-02T114706.500.json
+<> 2024-03-02T114348.500.json
+<> 2024-03-02T114223.200.json
+<> 2024-03-02T110059.500.json
+<> 2024-03-01T233802.500.json
+<> 2024-03-01T233451.500.json
+<> 2024-03-01T232702.500.json
+<> 2024-03-01T232138.500.json
+<> 2024-03-01T224027.500.json
+
+###
+# group: Well known openid configuration
+GET http://localhost:18080/realms/bookify/.well-known/openid-configuration
+Content-Type: application/x-www-form-urlencoded
+
+client_id=bookify-auth-client&grant_type=password&client_secret=3E3yvXaYppoYBF3Ir6DgtEzADKKzSurZ&scope=openid&username=test@test.com&password=123
+
+<> 2024-04-03T220729.200.json
+<> 2024-03-17T203826.200.json
+<> 2024-03-17T203700.200.json
+
+###
+# group: Identity
+# @name Access Token
+POST http://localhost:18080/realms/bookify/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=bookify-auth-client&grant_type=password&client_secret=3E3yvXaYppoYBF3Ir6DgtEzADKKzSurZ&scope=openid&username=jaytha2@test.com&password=12345
+
+<> 2024-04-03T220733.200.json
+<> 2024-03-17T203812.200.json
+<> 2024-03-17T203756.401.json
+<> 2024-03-17T203703.401.json
+<> 2024-03-17T203638.401.json
+
+###
+# group: Identity
+# @name Access Token Admin
+POST http://localhost:18080/realms/bookify/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=bookify-admin-client&grant_type=client_credentials&client_secret=UZDmbNxWmV4TlpaCRcju6pMRsyuV3er1&scope=openid
+
+<> 2024-04-03T220737.200.json
+<> 2024-03-17T203735.200.json
+<> 2024-03-17T203630.200.json
+
+###
+# group: Identity
+# @name Health
+GET http://localhost:18080/
+
+<> 2024-04-03T220742.200.html
+
+###
+# @name Health
+GET {{api_url}}/health
+
+<> 2024-04-03T220746.200.json

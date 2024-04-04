@@ -1,19 +1,19 @@
-using Bookify.Domain.Abstractions;
+﻿using Bookify.Domain.Abstractions;
 
 namespace Bookify.Domain.UnitTests.Infrastructure;
 
 public abstract class BaseTest
 {
-    protected static T AssertDomainEventWasRaised<T>(Entity entity) 
+    public static T AssertDomainEventWasPublished<T>(Entity entity)
         where T : IDomainEvent
     {
-        var domainEvent = entity.GetDomainEvents().OfType<T>().SingleOrDefault();
-        
-        if(domainEvent is null)
+        T? domainEvent = entity.GetDomainEvents().OfType<T>().SingleOrDefault();
+
+        if (domainEvent == null)
         {
-            throw new Exception($"Expected domain event of type {typeof(T).Name} to be raised, but it was not.");
+            throw new Exception($"{typeof(T).Name} was not published");
         }
-        
+
         return domainEvent;
     }
 }
