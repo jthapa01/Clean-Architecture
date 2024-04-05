@@ -42,17 +42,11 @@ public class DomainTests : BaseTest
             .Inherit(typeof(Entity))
             .GetTypes();
 
-        var failingTypes = new List<Type>();
-        foreach (Type entityType in entityTypes)
-        {
-            ConstructorInfo[] constructors = entityType.GetConstructors(BindingFlags.NonPublic |
-                                                                        BindingFlags.Instance);
-
-            if (!constructors.Any(c => c.IsPrivate && c.GetParameters().Length == 0))
-            {
-                failingTypes.Add(entityType);
-            }
-        }
+        var failingTypes = (
+            from entityType in entityTypes 
+            let constructors = entityType.GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance) 
+            where !constructors.Any(c => c.IsPrivate && c.GetParameters().Length == 0) 
+            select entityType).ToList();
 
         failingTypes.Should().BeEmpty();
     }
